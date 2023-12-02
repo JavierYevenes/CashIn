@@ -3,6 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panes;
+import models.Conection;    
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Conection;
 
 /**
  *
@@ -10,11 +17,14 @@ package panes;
  */
 public class Productos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Productos
-     */
+    Conection cn1 = new Conection();
+    Connection con1;
+    DefaultTableModel modTable;
+    Statement state;
+    ResultSet res;
     public Productos() {
         initComponents();
+        Rellenar();
     }
 
     /**
@@ -26,166 +36,160 @@ public class Productos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        TxtBarcode = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        TxtSiniva = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        TxtConiva = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        Tabla = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        Btnmod = new javax.swing.JButton();
+        Btnreg = new javax.swing.JButton();
+        Btnbuscar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        TxtBarcode = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        TxtSiniva = new javax.swing.JTextField();
+        TxtConiva = new javax.swing.JTextField();
+        Txtdesc = new javax.swing.JTextArea();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton5 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
 
-        jLabel1.setText("Cod. Barras");
-
-        jLabel3.setText("Descripción Prod.");
-
-        jLabel4.setText("Precio sin IVA");
-
-        TxtSiniva.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtSinivaActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setText("Precio con IVA");
-
-        jButton1.setText("Buscar");
-
-        jButton2.setText("Modificar");
-
-        jButton3.setText("Registrar");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Cod. Barras", "Cod. Gen", "Descripción", "Precio Base", "Precio IVA"
+                "Cod. Barras", "Descripción", "Precio Base", "Precio IVA"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(Tabla);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Registro Productos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton5.setText("Select");
+        Btnmod.setText("Modificar");
+        jPanel1.add(Btnmod, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        Btnreg.setText("Registrar");
+        jPanel1.add(Btnreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 80, -1));
+
+        Btnbuscar.setText("Buscar");
+        jPanel1.add(Btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 80, -1));
+
+        jLabel5.setText("Precio con IVA");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+
+        jLabel4.setText("Precio sin IVA");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
+        jPanel1.add(TxtBarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+
+        jLabel1.setText("Cod. Barras");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPanel1.add(TxtSiniva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+        jPanel1.add(TxtConiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+
+        Txtdesc.setColumns(20);
+        Txtdesc.setRows(5);
+        jPanel1.add(Txtdesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
+
+        jLabel3.setText("Descripción Prod.");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(796, 46, -1, -1));
+
+        jLabel2.setText("$");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+
         jLabel6.setText("$");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("$");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(TxtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(TxtSiniva, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addComponent(TxtConiva, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3))))
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addGap(6, 6, 6)
-                .addComponent(TxtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jLabel3)
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel4)
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(TxtSiniva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addComponent(jLabel5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(TxtConiva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-                .addGap(12, 12, 12)
-                .addComponent(jButton2)
-                .addGap(140, 140, 140)
-                .addComponent(jButton5)
-                .addGap(40, 40, 40)
-                .addComponent(jButton3))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TxtSinivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtSinivaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtSinivaActionPerformed
+    private void TablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMouseClicked
+        int fila = Tabla.getSelectedRow();
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningún dato.");
+        }else{
+            int bar = Integer.parseInt((String) Tabla.getValueAt(fila,0) .toString());
+            String desc = (String) Tabla.getValueAt(fila, 1);
+            double sinIva = Integer.parseInt((String) Tabla.getValueAt(fila,2) .toString());
+            double conIva = Integer.parseInt((String) Tabla.getValueAt(fila,3) .toString());
+            
+            TxtBarcode.setText(""+bar);
+            Txtdesc.setText(desc);
+            TxtSiniva.setText(""+ sinIva);
+            TxtConiva.setText(""+ conIva);
+        }
+    }//GEN-LAST:event_TablaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Btnbuscar;
+    private javax.swing.JButton Btnmod;
+    private javax.swing.JButton Btnreg;
+    private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxtBarcode;
     private javax.swing.JTextField TxtConiva;
     private javax.swing.JTextField TxtSiniva;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JTextArea Txtdesc;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
+    
+    void Rellenar(){
+        String sql = "SELECT Cod_barra, Descripcion, Precio_sin_iva, Precio_con_iva FROM productos";
+        try{
+            con1 = cn1.Conection();
+            state = con1.createStatement();
+            res = state.executeQuery(sql);
+            Object[]Productos = new Object[4];
+            modTable = (DefaultTableModel) Tabla.getModel();
+            while(res.next()){
+                Productos[0] = res.getInt("Cod_barra");
+                Productos[1] = res.getString("Descripcion");
+                Productos[2] = res.getString("Precio_sin_iva");
+                Productos[3] = res.getString("Precio_con_iva");
+                
+                modTable.addRow(Productos);
+            }
+            Tabla.setModel(modTable);
+            con1.close();
+        }catch(Exception e){
+            
+        }
+    }
 }

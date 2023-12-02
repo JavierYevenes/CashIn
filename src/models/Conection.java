@@ -16,7 +16,7 @@ public class Conection {
     }
     public static Connection Conection(){
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/cashin_db", "root", "");
             Statement st = cn.createStatement();
             System.out.println("Conexion Exitosa");

@@ -1,5 +1,6 @@
 package views;
 import panes.Ventas;
+import panes.Empleados;
 import javax.swing.JOptionPane;
 /**
  *
@@ -30,6 +31,10 @@ public class Mainu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        MnEmp = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
@@ -46,7 +51,6 @@ public class Mainu extends javax.swing.JFrame {
             .addGap(0, 277, Short.MAX_VALUE)
         );
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/FluentMdl2ReleaseGate.png"))); // NOI18N
         jMenu1.setText("Salir");
         jMenuBar1.add(jMenu1);
 
@@ -59,6 +63,19 @@ public class Mainu extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem1);
+        jMenu2.add(jSeparator1);
+
+        jMenuItem2.setText("Registros");
+        jMenu2.add(jMenuItem2);
+        jMenu2.add(jSeparator2);
+
+        MnEmp.setText("Empleados");
+        MnEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MnEmpActionPerformed(evt);
+            }
+        });
+        jMenu2.add(MnEmp);
 
         jMenuBar1.add(jMenu2);
 
@@ -100,6 +117,13 @@ public class Mainu extends javax.swing.JFrame {
         ventas.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void MnEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MnEmpActionPerformed
+        Empleados emp = new Empleados();
+        DeskPanel.add(emp);
+        emp.setVisible(true);
+        emp.show();
+    }//GEN-LAST:event_MnEmpActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -137,11 +161,15 @@ public class Mainu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DeskPanel;
+    private javax.swing.JMenuItem MnEmp;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
     // End of variables declaration//GEN-END:variables
 }
