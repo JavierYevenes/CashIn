@@ -164,8 +164,7 @@ public class Ventas extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel7)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel5))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(TxtPrecioUn, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -221,12 +220,13 @@ public class Ventas extends javax.swing.JPanel {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxtNomClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel5))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -374,25 +374,8 @@ public class Ventas extends javax.swing.JPanel {
     }
 
     private void handleFacturaOption(int barcode, double siniva) {
-        try {
-            String clienteQuery = "SELECT Razon FROM CLIENTES WHERE rut = ?";
-
-            try (PreparedStatement pst = cn.prepareStatement(clienteQuery)) {
-                pst.setString(1, cliente);
-
-                try (ResultSet res = pst.executeQuery()) {
-                    if (res.next()) {
-                        String razon = res.getString("Razon");
-                        TxtNomClient.setText(razon);
-                        TxtBarcode.setText(Integer.toString(barcode));
-                        TxtPrecioUn.setText("$ " + siniva);
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Cliente no registrado: " + e.getMessage());
-        }
+        TxtBarcode.setText(Integer.toString(barcode));
+        TxtPrecioUn.setText("$" + siniva);
     }
 
 

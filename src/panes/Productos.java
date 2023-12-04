@@ -41,7 +41,6 @@ public class Productos extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         Btnmod = new javax.swing.JButton();
         Btnreg = new javax.swing.JButton();
-        Btnbuscar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         TxtBarcode = new javax.swing.JTextField();
@@ -53,6 +52,8 @@ public class Productos extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        TxtBuscar = new javax.swing.JTextField();
+        Btnbuscar = new javax.swing.JButton();
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,25 +77,27 @@ public class Productos extends javax.swing.JPanel {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Btnmod.setText("Modificar");
-        jPanel1.add(Btnmod, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, -1, -1));
+        Btnmod.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnmodMouseClicked(evt);
+            }
+        });
+        jPanel1.add(Btnmod, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, -1, -1));
 
         Btnreg.setText("Registrar");
-        jPanel1.add(Btnreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 80, -1));
-
-        Btnbuscar.setText("Buscar");
-        jPanel1.add(Btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, 80, -1));
+        jPanel1.add(Btnreg, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 80, -1));
 
         jLabel5.setText("Precio con IVA");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
 
         jLabel4.setText("Precio sin IVA");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, -1, -1));
-        jPanel1.add(TxtBarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        jPanel1.add(TxtBarcode, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 120, -1));
 
         jLabel1.setText("Cod. Barras");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
-        jPanel1.add(TxtSiniva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
-        jPanel1.add(TxtConiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, -1, -1));
+        jPanel1.add(TxtSiniva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 100, -1));
+        jPanel1.add(TxtConiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 100, -1));
 
         Txtdesc.setColumns(20);
         Txtdesc.setRows(5);
@@ -110,6 +113,13 @@ public class Productos extends javax.swing.JPanel {
         jLabel6.setText("$");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 20));
 
+        Btnbuscar.setText("Buscar");
+        Btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnbuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -117,8 +127,15 @@ public class Productos extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(TxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Btnbuscar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -127,7 +144,13 @@ public class Productos extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TxtBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(Btnbuscar, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -149,6 +172,31 @@ public class Productos extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_TablaMouseClicked
 
+    private void BtnmodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnmodMouseClicked
+        int barcode;
+        double coniva, siniva;
+        String desc;
+        
+        barcode = Integer.parseInt(TxtBarcode.getText().trim());
+        coniva = Integer.parseInt(TxtConiva.getText().trim());
+        siniva = Integer.parseInt(TxtSiniva.getText().trim());
+        desc = Txtdesc.getText().trim();
+        
+        String prod = "UPDATE productos SET Descripcion = '"+ desc +"', Precio_sin_iva = '"+ siniva +"', Precio_sin_iva = '"+ siniva +"' ";
+        try{
+            Connection cn = Conection.Conection();
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(prod);
+            cn.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al Ingresar los datos \n \n Vuelva a intentarlo más tarde.");
+        }
+    }//GEN-LAST:event_BtnmodMouseClicked
+
+    private void BtnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnbuscarActionPerformed
+        buscar(TxtBuscar.getText());
+    }//GEN-LAST:event_BtnbuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btnbuscar;
@@ -156,6 +204,7 @@ public class Productos extends javax.swing.JPanel {
     private javax.swing.JButton Btnreg;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxtBarcode;
+    private javax.swing.JTextField TxtBuscar;
     private javax.swing.JTextField TxtConiva;
     private javax.swing.JTextField TxtSiniva;
     private javax.swing.JTextArea Txtdesc;
@@ -191,5 +240,32 @@ public class Productos extends javax.swing.JPanel {
         }catch(Exception e){
             
         }
+    }
+    
+    public DefaultTableModel buscar(String buscar){
+        String[] nombreRow = {"Cod", "Descripcion", "Precio", "Precio +IVA"};
+        Object[]Productos = new Object[4];
+        DefaultTableModel mod = new DefaultTableModel(null, nombreRow);
+        
+        String view = "SELECT Cod_barra, Descripcion, Precio_sin_iva, Precio_con_iva FROM productos WHERE Cod_barra LIKE '%" + buscar + "%' OR Descripcion LIKE '%" + buscar + "%'";
+        
+        try{
+            con1 = cn1.Conection();
+            state = con1.createStatement();
+            res = state.executeQuery(view);
+            while(res.next()){
+                
+                Productos[0] = res.getInt("Cod_barra");
+                Productos[1] = res.getString("Descripcion");
+                Productos[2] = res.getDouble("Precio_sin_iva");
+                Productos[3] = res.getDouble("Precio_con_iva");
+                
+            }
+            con1.close();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error de busqueda. \n \n Vuelva a Intentarlo.");
+        }
+        return mod;
+        
     }
 }

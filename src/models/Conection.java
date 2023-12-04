@@ -3,6 +3,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +17,8 @@ public class Conection {
     }
     public static Connection Conection(){
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/cashin_db", "root", "");
+            Class.forName("org.mariadb.jdbc.Driver");
+            Connection cn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashin_db", "root", "");
             Statement st = cn.createStatement();
             System.out.println("Conexion Exitosa");
             return cn;
@@ -32,4 +33,9 @@ public class Conection {
     public Statement createStatement() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    public PreparedStatement prepareStatement(String query) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }

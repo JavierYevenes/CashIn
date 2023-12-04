@@ -2,7 +2,6 @@ package models;
 
 import java.security.MessageDigest;
 import java.util.Arrays;
-import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -16,15 +15,15 @@ public class Encodecrip {
     public String encode(String chain) {
         String encriptacion = "";
         try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-256");
-            byte[] llavePassword = sha.digest(secretKey.getBytes("utf-8"));
-            byte[] keyBytes = Arrays.copyOf(llavePassword, 16);
-            SecretKey key = new SecretKeySpec(keyBytes, "AES");
-            Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+             MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] llavePassword = md5.digest(secretKey.getBytes("utf-8"));
+            byte[] BytesKey = Arrays.copyOf(llavePassword, 24);
+            SecretKey key = new SecretKeySpec(BytesKey, "DESede");
+            Cipher cifrado = Cipher.getInstance("DESede");
+            cifrado.init(Cipher.ENCRYPT_MODE, key);
             byte[] plainTextBytes = chain.getBytes("utf-8");
-            byte[] buf = cipher.doFinal(plainTextBytes);
-            byte[] base64Bytes = Base64.encodeBase64(buf);
+            byte[] buf = cifrado.doFinal(plainTextBytes);
+            byte[] base64Bytes = org.apache.commons.codec.binary.Base64.encodeBase64(buf);
             encriptacion = new String(base64Bytes);
 
         } catch (Exception ex) {
@@ -36,12 +35,12 @@ public class Encodecrip {
     public String desencode(String shaincrip) {
         String desencriptacion = "";
         try {
-            byte[] message = Base64.decodeBase64(shaincrip.getBytes("utf-8"));
-            MessageDigest sha = MessageDigest.getInstance("SHA-256");
-            byte[] digestOfPassword = sha.digest(secretKey.getBytes("utf-8"));
-            byte[] keyBytes = Arrays.copyOf(digestOfPassword, 16);
-            SecretKey key = new SecretKeySpec(keyBytes, "AES");
-            Cipher decipher = Cipher.getInstance("AES");
+            byte[] message = org.apache.commons.codec.binary.Base64.decodeBase64(shaincrip.getBytes("utf-8"));
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            byte[] digestOfPassword = md5.digest(secretKey.getBytes("utf-8"));
+            byte[] keyBytes = Arrays.copyOf(digestOfPassword, 24);
+            SecretKey key = new SecretKeySpec(keyBytes, "DESede");
+            Cipher decipher = Cipher.getInstance("DESede");
             decipher.init(Cipher.DECRYPT_MODE, key);
             byte[] plainText = decipher.doFinal(message);
             desencriptacion = new String(plainText, "UTF-8");
