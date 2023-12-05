@@ -3,29 +3,34 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package panes;
+import controllers.Cclient;
+import models.Client;
 import models.Conection;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 /**
  *
  * @author james
  */
 public class ClienteReg extends javax.swing.JPanel {
-
-    /**
-     * Creates new form ClienteReg
-     */
+    Conection cn1 = new Conection();
+    Connection con1;
+    DefaultTableModel modTable;
+    Statement state;
+    ResultSet res;
+    
     public ClienteReg() {
         initComponents();
-        Conection cn1 = new Conection();
-        Connection con1;
-        DefaultTableModel modTable;
-        Statement state;
-        ResultSet res;
+        Rellenar();
+        cargarCombo(Combogiro);
     }
 
     /**
@@ -37,13 +42,13 @@ public class ClienteReg extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblx = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         Txtrut = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Txtrazon = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        Txtgiro = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         Txtdirection = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -54,10 +59,13 @@ public class ClienteReg extends javax.swing.JPanel {
         Txtmail = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        Combogiro = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         Txtbuscar = new javax.swing.JTextField();
         Btnbuscar = new javax.swing.JButton();
+
+        lblx.setText("jLabel8");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Registro de Clientes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
@@ -76,6 +84,11 @@ public class ClienteReg extends javax.swing.JPanel {
         jLabel7.setText("Correo:");
 
         jButton1.setText("Modificar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Registrar");
 
@@ -83,23 +96,24 @@ public class ClienteReg extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(Txtrut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Txtrazon, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(Txtgiro)
-                    .addComponent(Txtdirection)
-                    .addComponent(Txtcomuna)
-                    .addComponent(Txtfono)
-                    .addComponent(Txtmail))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Combogiro, 0, 170, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel5)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel7)
+                        .addComponent(Txtrut, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Txtrazon, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
+                        .addComponent(Txtdirection)
+                        .addComponent(Txtcomuna)
+                        .addComponent(Txtfono)
+                        .addComponent(Txtmail)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
@@ -122,7 +136,7 @@ public class ClienteReg extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Txtgiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Combogiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -158,6 +172,11 @@ public class ClienteReg extends javax.swing.JPanel {
         jScrollPane1.setViewportView(Tabla);
 
         Btnbuscar.setText("Buscar");
+        Btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnbuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -195,15 +214,23 @@ public class ClienteReg extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void BtnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnbuscarActionPerformed
+        buscar(Txtbuscar.getText());
+    }//GEN-LAST:event_BtnbuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Modificar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btnbuscar;
+    private javax.swing.JComboBox<String> Combogiro;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField Txtbuscar;
     private javax.swing.JTextField Txtcomuna;
     private javax.swing.JTextField Txtdirection;
     private javax.swing.JTextField Txtfono;
-    private javax.swing.JTextField Txtgiro;
     private javax.swing.JTextField Txtmail;
     private javax.swing.JTextField Txtrazon;
     private javax.swing.JTextField Txtrut;
@@ -218,18 +245,43 @@ public class ClienteReg extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblx;
     // End of variables declaration//GEN-END:variables
 
+     void Rellenar(){
+        String sql = "SELECT cliente.Rut, cliente.Razon, giro.Nombre, cliente.Comuna, cliente.Direccion, cliente.Telefono, cliente.Correo FROM cliente JOIN grio ON cliente.Giro = giro.Id";
+        try{
+            con1 = cn1.Conection();
+            state = con1.createStatement();
+            res = state.executeQuery(sql);
+            Object[]Empleado = new Object[7];
+            modTable = (DefaultTableModel) Tabla.getModel();
+            while(res.next()){
+                Empleado[0] = res.getInt("cliente.Rut");
+                Empleado[1] = res.getString("cliente.Razon");
+                Empleado[2] = res.getString("giro.Nombre");
+                Empleado[3] = res.getString("cliente.Direccion");
+                Empleado[4] = res.getInt("cliente.Comuna");
+                Empleado[5] = res.getString("cliente.Telefono");
+                Empleado[6] = res.getInt("cliente.Correo");
+                
+                modTable.addRow(Empleado);
+            }
+            Tabla.setModel(modTable);
+            con1.close();
+        }catch(Exception e){
+            
+        }
+    }    
+     
     public DefaultTableModel buscar(String buscar){
-        String[] nombreRow = {"Cod", "Descripcion", "Precio", "Precio +IVA"};
-        Object[]Productos = new Object[4];
+        String[] nombreRow = {"Rut", "Razon Social", "Giro", "Dirección", "Comuna", "Telefono", "Correo"};
+        Object[]clientes = new Object[7];
         DefaultTableModel mod = new DefaultTableModel(null, nombreRow);
         
-        String view ="SELECT `empleado`.`Id`, `empleado`.`Nombre`, `empleado`.`Apellido`, `empleado`.`Rut`, `empleado`.`Fono`, `crew`.`Email`, `cargo`.`Id`, `cargo`.`Nombre`\n" +
-                     "FROM `empleado` \n" +
-                     "LEFT JOIN `crew` ON `crew`.`Id_empleado` = `empleado`.`Id` \n" +
-                     "LEFT JOIN `cargo` ON `empleado`.`Cargo_id` = `cargo`.`Id` \n" +
-                     "WHERE empleado.Id LIKE '"+ buscar +"' OR  empleado.Nombre LIKE '"+buscar+"' OR empleado.Rut'"+buscar+"'";
+        String view =" SELECT cliente.Rut, cliente.Razon, giro.Nombre, cliente.Comuna, cliente.Direccion, cliente.Telefono, cliente.Correo "
+                + "FROM cliente JOIN grio ON cliente.Giro = giro.Id "
+                + "WHERE cliente.Rut LIKE '"+ buscar +"' OR  cliente.Razon LIKE '"+buscar+"'";
         
         try{
             con1 = cn1.Conection();
@@ -237,11 +289,14 @@ public class ClienteReg extends javax.swing.JPanel {
             res = state.executeQuery(view);
             while(res.next()){
                 
-                Productos[0] = res.getInt("Cod_barra");
-                Productos[1] = res.getString("Descripcion");
-                Productos[2] = res.getDouble("Precio_sin_iva");
-                Productos[3] = res.getDouble("Precio_con_iva");
-                
+                clientes[0] = res.getString("cliente.Rut");
+                clientes[1] = res.getString("cliente.Razon");
+                clientes[2] = res.getString("giro.Nombre");
+                clientes[3] = res.getDouble("cliente.Comuna");
+                clientes[4] = res.getDouble("cliente.Direccion");
+                clientes[5] = res.getDouble("cliente.Telefono");
+                clientes[6] = res.getDouble("cliente.Correo");
+                mod.addRow(clientes);
             }
             con1.close();
         }catch(Exception e){
@@ -250,5 +305,55 @@ public class ClienteReg extends javax.swing.JPanel {
         return mod;
         
     }
+    
+    void Modificar(){
+        String rut, razon, giro, direct, comuna, email;
+        int fono;
+        
+        rut = Txtrut.getText().trim();
+        razon = Txtrazon.getText().trim();
+        giro = Combogiro.getSelectedItem().toString();
+        direct = Txtdirection.getText().trim();
+        comuna = Txtcomuna.getText().trim();
+        email = Txtmail.getText().trim();
+        fono = Integer.parseInt(Txtfono.getText().trim());
+        
+        String client = "UPDATE cliente SET Rut '"+ rut +"', Razon'"+ razon +"', Comuna'"+ comuna +"', Giro'"+ giro +"', Direccion'"+ direct +"', Telefono'"+ fono +"', Correo'"+ email +"' WHERE Rut='"+ rut +"'";
+        try{
+            con1 = cn1.Conection();
+            state = con1.createStatement();
+            res = state.executeQuery(client);
+            con1.close(); 
+            
+        }catch(Exception e){
+            System.out.println("Error al ingresar los datos en Clientes");
+        }
+    }
+    
+    private void cargarCombo(JComboBox<String> comboBox) {
+        DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<>();
+        comboBox.setModel(comboModel);
+        Cclient cl = new Cclient();
 
+        try {
+            String query = "SELECT Nombre FROM giro";
+
+            try (Statement st = con1.createStatement();
+                ResultSet rs = st.executeQuery(query)) {
+
+                while (rs.next()) {
+                    Client ct = new Client();
+                    ct.setgiro(rs.getString("Nombre"));
+                    cl.addgiro(ct);
+                    comboModel.addElement(ct.getgiro());
+                }
+            }
+
+            AutoCompleteDecorator.decorate(comboBox, ObjectToStringConverter.DEFAULT_IMPLEMENTATION);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error en la selección: " + e.getMessage());
+        }
+    }
 }

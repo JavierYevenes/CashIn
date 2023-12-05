@@ -1,6 +1,7 @@
 package panes;
 
 import models.Conection;
+import controllers.Cvalidaciones;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.awt.Toolkit;
@@ -18,9 +19,11 @@ public class Empleados extends javax.swing.JPanel {
     Statement state;
     ResultSet res;
     
+    private Cvalidaciones = mail;
     public Empleados() {
         initComponents();
         Rellenar();
+        Correo = new Cvalidaciones();
     }
 
     
@@ -284,6 +287,9 @@ public class Empleados extends javax.swing.JPanel {
             if(rs.next()){
                 txtRut.setBackground(Color.red);
                 JOptionPane.showMessageDialog(null,"Ojo \n \n" + "Ya existe un empleado con este Rut. \n \n" + "Vuelva a revisar bien los datos." );
+            }
+            if(Correo.ValidMail(Txtemail.getText().trim())){
+            
             }else{
                 con.close();
                 
