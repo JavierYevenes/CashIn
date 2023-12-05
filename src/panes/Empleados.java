@@ -19,11 +19,11 @@ public class Empleados extends javax.swing.JPanel {
     Statement state;
     ResultSet res;
     
-    private Cvalidaciones = mail;
+    private Cvalidaciones mail;
     public Empleados() {
         initComponents();
         Rellenar();
-        Correo = new Cvalidaciones();
+        mail = new Cvalidaciones();
     }
 
     
@@ -288,8 +288,8 @@ public class Empleados extends javax.swing.JPanel {
                 txtRut.setBackground(Color.red);
                 JOptionPane.showMessageDialog(null,"Ojo \n \n" + "Ya existe un empleado con este Rut. \n \n" + "Vuelva a revisar bien los datos." );
             }
-            if(Correo.ValidMail(Txtemail.getText().trim())){
-            
+            if(mail.ValidMail(Txtemail.getText().trim())){
+                JOptionPane.showMessageDialog(null, "Correo electrónico no válido. Verifique el formato.");
             }else{
                 con.close();
                 
