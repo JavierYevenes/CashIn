@@ -4,10 +4,12 @@
  */
 package panes;
 import controllers.Cclient;
+import java.awt.Color;
 import models.Client;
 import models.Conection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import static java.lang.Integer.parseInt;
 import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -91,6 +93,17 @@ public class ClienteReg extends javax.swing.JPanel {
         });
 
         jButton2.setText("Registrar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        Combogiro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CombogiroMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -221,6 +234,83 @@ public class ClienteReg extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Modificar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int validation = 0;
+        String rut, razon, direction, comuna, correo;
+        int fono, giro;
+        
+        rut = Txtrut.getText().trim();
+        razon = Txtrazon.getText().trim();
+        direction = Txtdirection.getText().trim();
+        comuna = Txtcomuna.getText().trim();
+        correo = Txtmail.getText().trim();
+        fono = Integer.parseInt(Txtfono.getText());
+        giro = Integer.parseInt(lblx.getText());
+        
+        if(rut.equals("")){
+            Txtrut.setBackground(Color.red);
+            validation++;
+        }
+        if(razon.equals("")){
+            Txtrazon.setBackground(Color.red);
+            validation++;
+        }
+        if(direction.equals("")){
+            Txtdirection.setBackground(Color.red);
+            validation++;
+        }
+        if(comuna.equals("")){
+            Txtcomuna.setBackground(Color.red);
+            validation++;
+        }
+        if(correo.equals("")){
+            Txtmail.setBackground(Color.red);
+            validation++;
+        }
+        try{
+            Connection cn = Conection.Conection();
+            PreparedStatement pst = cn.prepareStatement("SELECT Rut FROM cliente WHERE Rut = '"+ rut +"'");
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()){
+                Txtrut.setBackground(Color.red);
+                JOptionPane.showMessageDialog(null, "Ya existe alguien con este Rut registrado. \n \n Revise bien los datos ingresados.");
+            }else{
+                cn.close();
+                
+                if(validation == 0){
+                    try{
+                        Connection con = Conection.Conection();
+                        PreparedStatement pds = con.prepareStatement("INSERT INTO cliente VALUES (?,?,?,?,?,?,?)");
+                        
+                        pds.setString(1, rut);
+                        pds.setString(2, razon);
+                        pds.setString(3,comuna);
+                        pds.setString(4, direction);
+                        pds.setInt(5, fono);
+                        pds.setInt(6, giro);
+                        pds.setString(7, correo);
+                        pds.executeUpdate();
+                        con.close();
+                        
+                        JOptionPane.showMessageDialog(null, "Registro exitoso.");
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Error de Registro.");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Debes completar todos los campos.");
+                }
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error de conexion. \n \n Intentelo más tarde");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void CombogiroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CombogiroMouseClicked
+        String box = Combogiro.getSelectedItem().toString();
+        lblx.setText(box);
+    }//GEN-LAST:event_CombogiroMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

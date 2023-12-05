@@ -21,6 +21,7 @@ public class Credentials extends javax.swing.JPanel {
     
     public Credentials() {
         initComponents();
+        cripy = new Encodecrip();
     }
 
     /**
@@ -119,8 +120,8 @@ public class Credentials extends javax.swing.JPanel {
         String correo, pass1, pass2;
         
         correo = Txtmail.getText();
-        pass1 = String.valueOf(Txtpass1.getPassword());
-        pass2 =  String.valueOf(Txtpass2.getPassword());
+        pass1 = String.valueOf(cripy.encode(Txtpass1.getPassword()));
+        pass2 =  String.valueOf(cripy.encode(Txtpass2.getPassword()));
         
         if(correo.equals("")){
             Txtmail.setBackground(Color.red);
@@ -146,17 +147,25 @@ public class Credentials extends javax.swing.JPanel {
                 cn.close();
                 
                 if(validation == 0){
-                    Connection con = Conection.Conection();
-                    PreparedStatement pds = con.prepareStatement("INSERT INTO validaciones VALUES(?,?)");
+                    try{
+                        Connection con = Conection.Conection();
+                        PreparedStatement pds = con.prepareStatement("INSERT INTO validaciones VALUES(?,?)");
                     
-                    pds.setString(1, correo);
-                    pds.setString(2, pass1);
-                    pds.executeUpdate();
-                    con.close();
+                        pds.setString(1, correo);
+                        pds.setString(2, pass1);
+                        pds.executeUpdate();
+                        con.close();
+                    
+                        JOptionPane.showMessageDialog(null, "Registro Exitoso");
+                    }catch(Exception e){
+                        JOptionPane.showMessageDialog(null, "Error al registrar. \n \n Vuelva a intentarlo más tarde.");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "Debes completar todos los campos.");
                 }
             }
         }catch(Exception e){
-            
+            JOptionPane.showMessageDialog(null,"Error de conexion. \n \n Intentelo más tarde,");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
