@@ -24,10 +24,14 @@ public class Ventas extends javax.swing.JPanel {
     Conection cn = new Conection();
     Connection con = cn.Conection();
     
+    double precio = 0;
+    int cantidad = 0;
+    
     public Ventas() {
         initComponents();
         setSize(780,720);
         cargarCombo(ComboDesc);
+        mathprice();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,7 +40,6 @@ public class Ventas extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
-        TxtUnidad = new javax.swing.JTextField();
         TxtPrecioUn = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         TxtBarcode = new javax.swing.JTextField();
@@ -58,6 +61,7 @@ public class Ventas extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        Spcant = new javax.swing.JSpinner();
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,12 +95,6 @@ public class Ventas extends javax.swing.JPanel {
             Tabla.getColumnModel().getColumn(5).setPreferredWidth(40);
         }
 
-        TxtUnidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TxtUnidadActionPerformed(evt);
-            }
-        });
-
         jLabel1.setText("Descripción:");
 
         jLabel2.setText("Código Barras:");
@@ -126,6 +124,11 @@ public class Ventas extends javax.swing.JPanel {
         jLabel7.setText("Precio Un.");
 
         ComboDesc.setEditable(true);
+        ComboDesc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboDescActionPerformed(evt);
+            }
+        });
 
         BtnDelete.setText("Quitar");
 
@@ -134,6 +137,13 @@ public class Ventas extends javax.swing.JPanel {
         jLabel8.setText("Total:");
 
         jButton2.setText("Imprimir");
+
+        Spcant.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        Spcant.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                SpcantStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -158,7 +168,7 @@ public class Ventas extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(TxtUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Spcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -230,11 +240,11 @@ public class Ventas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TxtBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TxtUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxtPrecioUn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(Spcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -252,10 +262,6 @@ public class Ventas extends javax.swing.JPanel {
     private void TxtrutclActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtrutclActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TxtrutclActionPerformed
-
-    private void TxtUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtUnidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TxtUnidadActionPerformed
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         char keyPress = evt.getKeyChar();
@@ -277,18 +283,26 @@ public class Ventas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jTextField2KeyTyped
 
+    private void SpcantStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_SpcantStateChanged
+        mathprice();
+    }//GEN-LAST:event_SpcantStateChanged
+
+    private void ComboDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboDescActionPerformed
+        mathprice();
+    }//GEN-LAST:event_ComboDescActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnDelete;
     private javax.swing.JCheckBox CheckBoleta;
     private javax.swing.JCheckBox CheckFactura;
     private javax.swing.JComboBox<String> ComboDesc;
+    private javax.swing.JSpinner Spcant;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxtBarcode;
     private javax.swing.JTextField TxtNomClient;
     private javax.swing.JTextField TxtPrecioUn;
     private javax.swing.JTextField TxtTotal;
-    private javax.swing.JTextField TxtUnidad;
     private javax.swing.JTextField Txtrutcl;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -377,6 +391,20 @@ public class Ventas extends javax.swing.JPanel {
         TxtBarcode.setText(Integer.toString(barcode));
         TxtPrecioUn.setText("$" + siniva);
     }
-
-
+    
+    private void mathprice(){
+        String stprecio = TxtPrecioUn.getText();
+        
+        try{
+            precio = Double.parseDouble(stprecio);
+            cantidad = Integer.parseInt(Spcant.getValue().toString());
+            TxtTotal.setText(aMoney(precio*cantidad));
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Error al obtener datos del sistema. \n \n Vuelva a intentarlo.");
+        }
+    }
+    
+    public String aMoney(double precio){
+        return "$"+Math.round(precio*100)/100;
+    }
 }
