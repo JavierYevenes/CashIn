@@ -22,6 +22,7 @@ public class Credentials extends javax.swing.JPanel {
     public Credentials() {
         initComponents();
         cripy = new Encodecrip();
+        System.out.println("Inicializando panel de Credenciales...");
     }
 
     /**
@@ -73,8 +74,11 @@ public class Credentials extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(jButton1))
-                    .addComponent(Txtpass1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Txtpass2, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(Txtpass2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
+                            .addComponent(Txtpass1, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -120,8 +124,8 @@ public class Credentials extends javax.swing.JPanel {
         String correo, pass1, pass2;
         
         correo = Txtmail.getText();
-        pass1 = String.valueOf(cripy.encode(Txtpass1.getPassword()));
-        pass2 =  String.valueOf(cripy.encode(Txtpass2.getPassword()));
+        pass1 = cripy.encode(new String(Txtpass1.getPassword()));
+        pass2 =  String.valueOf(Txtpass2.getPassword());
         
         if(correo.equals("")){
             Txtmail.setBackground(Color.red);
@@ -133,6 +137,13 @@ public class Credentials extends javax.swing.JPanel {
         }
         if(pass2.equals("")){
             Txtpass2.setBackground(Color.red);
+            validation++;
+        }
+        if(pass1.equals(pass2)){
+            JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden. \n \n Revise bien los datos.");
+            Txtpass1.setBackground(Color.YELLOW);
+            Txtpass2.setBackground(Color.YELLOW);
+            
             validation++;
         }
         try{

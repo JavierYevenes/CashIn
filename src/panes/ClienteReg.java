@@ -33,6 +33,7 @@ public class ClienteReg extends javax.swing.JPanel {
         initComponents();
         Rellenar();
         cargarCombo(Combogiro);
+        System.out.println("Iniciando Panel Clientes...");
     }
 
     /**
@@ -370,7 +371,7 @@ public class ClienteReg extends javax.swing.JPanel {
         DefaultTableModel mod = new DefaultTableModel(null, nombreRow);
         
         String view =" SELECT cliente.Rut, cliente.Razon, giro.Nombre, cliente.Comuna, cliente.Direccion, cliente.Telefono, cliente.Correo "
-                + "FROM cliente JOIN grio ON cliente.Giro = giro.Id "
+                + "FROM cliente JOIN giro ON cliente.Giro = giro.Id "
                 + "WHERE cliente.Rut LIKE '"+ buscar +"' OR  cliente.Razon LIKE '"+buscar+"'";
         
         try{

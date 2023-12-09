@@ -1,41 +1,53 @@
 package models;
-import java.sql.Statement;
+
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
- * @author Javier Yévenes
+ * Clase para gestionar la conexión a una base de datos MariaDB.
  */
 public class Conection {
-    public Conection(){
-        
+    private static Connection connection;
+
+    public Conection() {
     }
-    public static Connection Conection(){
+
+    /**
+     * Establece la conexión a la base de datos.
+     *
+     * @return Objeto Connection si la conexión es exitosa, null en caso de error.
+     */
+    public static Connection Conection() {
         try {
             Class.forName("org.mariadb.jdbc.Driver");
-            Connection cn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/cashin_db", "root", "");
-            Statement st = cn.createStatement();
+            connection = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3307/cashin", "root", "");
+            Statement st = connection.createStatement();
             System.out.println("Conexion Exitosa");
-            return cn;
+            return connection;
         } catch (SQLException e) {
             System.out.println("Error en conexión local " + e);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Conection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return(null);
+        return connection;
     }
 
-    public Statement createStatement() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * Cierra la conexión a la base de datos.
+     */
+    public static void closeConection() {
+        if (connection != null) {
+            try {
+                connection.close();
+                System.out.println("Conexion cerrada");
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar la conexion" + e);
+            }
+        }
     }
-
-    public PreparedStatement prepareStatement(String query) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
 }

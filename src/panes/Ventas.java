@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.swing.JList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 /**
@@ -29,8 +30,8 @@ public class Ventas extends javax.swing.JPanel {
     
     public Ventas() {
         initComponents();
-        setSize(780,720);
         cargarCombo(ComboDesc);
+        System.out.println("Inicializando Panel Ventas...");
         mathprice();
     }
 
@@ -57,11 +58,12 @@ public class Ventas extends javax.swing.JPanel {
         TxtNomClient = new javax.swing.JTextField();
         ComboDesc = new javax.swing.JComboBox<>();
         BtnDelete = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        btnacept = new javax.swing.JButton();
+        lbltotal = new javax.swing.JLabel();
+        LblTotal = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         Spcant = new javax.swing.JSpinner();
+        jLabel3 = new javax.swing.JLabel();
 
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -132,9 +134,14 @@ public class Ventas extends javax.swing.JPanel {
 
         BtnDelete.setText("Quitar");
 
-        jButton1.setText("Agregar");
+        btnacept.setText("Agregar");
+        btnacept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaceptActionPerformed(evt);
+            }
+        });
 
-        jLabel8.setText("Total:");
+        lbltotal.setText("Total:");
 
         jButton2.setText("Imprimir");
 
@@ -145,6 +152,8 @@ public class Ventas extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setText("IVA:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -152,6 +161,25 @@ public class Ventas extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(56, 56, 56)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(CheckFactura)
+                                .addGap(42, 42, 42)
+                                .addComponent(Txtrutcl, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TxtNomClient, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(CheckBoleta)
+                                .addGap(417, 417, 417)))
+                        .addGap(0, 33, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -179,41 +207,24 @@ public class Ventas extends javax.swing.JPanel {
                                         .addComponent(TxtPrecioUn, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(TxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CheckFactura)
-                                        .addGap(42, 42, 42)
-                                        .addComponent(Txtrutcl, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(TxtNomClient, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(CheckBoleta)
-                                        .addGap(417, 417, 417)))))
-                        .addGap(0, 49, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGap(48, 48, 48)
+                                        .addComponent(btnacept)))
+                                .addGap(0, 86, Short.MAX_VALUE))
                             .addComponent(jScrollPane1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BtnDelete)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel8)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(328, 328, 328)
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(BtnDelete)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbltotal)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(LblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap())))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(334, 334, 334)
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +254,7 @@ public class Ventas extends javax.swing.JPanel {
                     .addComponent(TxtPrecioUn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TxtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ComboDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(btnacept)
                     .addComponent(Spcant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -251,10 +262,12 @@ public class Ventas extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BtnDelete)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbltotal)
+                        .addComponent(LblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel3))
                 .addGap(53, 53, 53))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -268,7 +281,7 @@ public class Ventas extends javax.swing.JPanel {
         String codEmp = jTextField2.getText();
         if(keyPress == KeyEvent.VK_ENTER){
             try{
-                Statement st = cn.createStatement();
+                Statement st = con.createStatement();
                 ResultSet res = st.executeQuery("SELECT Nombre, Apellido FROM empleados WHERE id='"+ codEmp +"'");
                 if(res.next()){
                     String nom = res.getString("Nombre");
@@ -291,12 +304,33 @@ public class Ventas extends javax.swing.JPanel {
         mathprice();
     }//GEN-LAST:event_ComboDescActionPerformed
 
+    private void btnaceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptActionPerformed
+        String barcode = TxtBarcode.getText();
+        Object selectedItem = ComboDesc.getSelectedItem();
+
+        if (selectedItem != null) {
+            String desc = selectedItem.toString();
+            int cant = (int) Spcant.getValue();
+            double precioUn = Double.parseDouble(TxtPrecioUn.getText().replace("$", ""));
+            double total = precioUn * cant;
+            
+            Object[] rowData = {barcode, desc, cant, precioUn, total};
+            DefaultTableModel modT = (DefaultTableModel) Tabla.getModel();
+            modT.addRow(rowData);
+
+            totalUp();
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione una descripción válida antes de agregar.");
+        }
+    }//GEN-LAST:event_btnaceptActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnDelete;
     private javax.swing.JCheckBox CheckBoleta;
     private javax.swing.JCheckBox CheckFactura;
     private javax.swing.JComboBox<String> ComboDesc;
+    private javax.swing.JLabel LblTotal;
     private javax.swing.JSpinner Spcant;
     private javax.swing.JTable Tabla;
     private javax.swing.JTextField TxtBarcode;
@@ -304,19 +338,19 @@ public class Ventas extends javax.swing.JPanel {
     private javax.swing.JTextField TxtPrecioUn;
     private javax.swing.JTextField TxtTotal;
     private javax.swing.JTextField Txtrutcl;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnacept;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lbltotal;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCombo(JComboBox<String> comboBox) {
@@ -327,7 +361,7 @@ public class Ventas extends javax.swing.JPanel {
     try {
         String query = "SELECT Descripcion FROM productos";
 
-        try (Statement st = cn.createStatement();
+        try (Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
             while (rs.next()) {
@@ -360,7 +394,7 @@ public class Ventas extends javax.swing.JPanel {
         try {
             String query = "SELECT Cod_barra, Precio_sin_iva, Precio_con_iva FROM productos WHERE Descripcion = ?";
 
-            try (PreparedStatement ps = cn.prepareStatement(query)) {
+            try (PreparedStatement ps = con.prepareStatement(query)) {
                 ps.setString(1, desc);
 
                 try (ResultSet rs = ps.executeQuery()) {
@@ -395,16 +429,40 @@ public class Ventas extends javax.swing.JPanel {
     private void mathprice(){
         String stprecio = TxtPrecioUn.getText();
         
-        try{
+        if(stprecio != null & Spcant != null){
+            try{
             precio = Double.parseDouble(stprecio);
             cantidad = Integer.parseInt(Spcant.getValue().toString());
             TxtTotal.setText(aMoney(precio*cantidad));
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Error al obtener datos del sistema. \n \n Vuelva a intentarlo.");
+            
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Error al obtener datos del sistema. \n \n Vuelva a intentarlo.");
+            }
+        }
+        if(!stprecio.isEmpty()){
+            try{
+            precio = Double.parseDouble(stprecio);
+            cantidad = Integer.parseInt(Spcant.getValue().toString());
+            TxtTotal.setText(aMoney(precio*cantidad));
+            
+            }catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Error al obtener datos del sistema. \n \n Vuelva a intentarlo.");
+            }
         }
     }
     
     public String aMoney(double precio){
         return "$"+Math.round(precio*100)/100;
+    }
+    
+    private void totalUp(){
+        DefaultTableModel modT =(DefaultTableModel) Tabla.getModel();
+        double total = 0;
+        
+        for( int i = 0; i < modT.getRowCount(); i++){
+            double totalRow = (double) modT.getValueAt(i, 04);
+            total += totalRow;
+        }
+        LblTotal.setText(aMoney(total));
     }
 }

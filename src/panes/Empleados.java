@@ -20,10 +20,12 @@ public class Empleados extends javax.swing.JPanel {
     ResultSet res;
     
     private Cvalidaciones mail;
+    
     public Empleados() {
         initComponents();
         Rellenar();
         mail = new Cvalidaciones();
+        System.out.println("Inicializando panel Empleados...");
     }
 
     
@@ -357,7 +359,7 @@ public class Empleados extends javax.swing.JPanel {
             Txtfono.setText(""+fono);
             Txtemail.setText(email);
             Txtcargoid.setText(""+cargoId);
-            ComboCargo.setName(cargo);
+            ComboCargo.setSelectedItem(cargo);
         }
     }//GEN-LAST:event_TablaMouseClicked
 

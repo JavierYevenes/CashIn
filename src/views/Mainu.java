@@ -3,6 +3,7 @@ import panes.Ventas;
 import panes.Empleados;
 import javax.swing.JOptionPane;
 import panes.ClienteReg;
+import panes.Credentials;
 import panes.Productos;
 /**
  *
@@ -60,6 +61,11 @@ public class Mainu extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Modulos");
+        jMenu2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu2ActionPerformed(evt);
+            }
+        });
 
         jMenuItem1.setText("Ventas");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +172,14 @@ public class Mainu extends javax.swing.JFrame {
         cl.show();
         cl.setLocation(0, 0);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        Credentials cred = new Credentials();
+        DeskPanel.add(cred);
+        cred.setVisible(true);
+        cred.show();
+        cred.setLocation(0,0);
+    }//GEN-LAST:event_jMenu2ActionPerformed
 
     /**
      * @param args the command line arguments

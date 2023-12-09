@@ -91,7 +91,7 @@ public class Login extends javax.swing.JFrame {
 
     private void BtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOkActionPerformed
         user = TxtUser.getText().trim();
-        pass = encrip.encode(TxtPass.getText().trim());
+        pass = encrip.desencode(TxtPass.getText().trim());
         
         try{
             Connection cn = Conection.Conection();
